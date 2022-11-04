@@ -6,8 +6,8 @@ library(maptools)
 #define variables
 #variables that control the size and strength of clusters
 val.at.center=1
-effect.range=25
-background=0.1
+effect.range=10
+background=0.001
 
 #variables that control the number of points and spatial dimensions
 Pointnum=100
@@ -17,7 +17,7 @@ Ymin=-50
 Ymax=50
 
 #define the center locations and set up the distance vector
-centers=matrix(data=c(-25,-25,25,25,-25,25,-25,25),nrow=4,ncol=2)
+centers=matrix(data=c(-10,-10,10,10,-10,10,-10,10),nrow=4,ncol=2)
 dist=matrix(nrow=4,ncol=1)
 
 #define outputs
@@ -72,6 +72,9 @@ points(centers,type="p", col="red", pch=21, bg="red")
 output_ppp = ppp(output.X, output.Y, c(Xmin,Xmax), c(Ymin,Ymax))
 
 quadrat.test(output_ppp, alternative = "clustered")
+quadrat.test(output_ppp, nx=20, ny=20, alternative = "clustered")
 pest <- Kest(output_ppp)
 plot(pest)
+plot(output_ppp)
+
 

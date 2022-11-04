@@ -2,7 +2,7 @@
 #
 library(spatstat)
 library(maptools)
-
+set.seed(1)
 
 #define variables
 #variables that control the size and strength of clusters
@@ -75,7 +75,7 @@ plot(output_ppp)
 
 #create a CSR object for analysis 
 
-lambda.u <- function(x,y){1000 * x^2 * y^2 + 1000}
+lambda.u <- function(x,y){100 * x^2 * y^2 + 100}
 
 output_csr <- rpoispp(lambda = lambda.u, win = owin(c(0,1), c(0,1)))
 plot(output_csr)
@@ -88,7 +88,7 @@ plot(output_csr)
 
 ####Q1.2####
 #effect.range and background have major controls over the strength of clustering 
-#The Y and X min/max have some control over the strength of clustering 
+#The Y and X min/max have some minor control over the strength of clustering 
 
 ####Q1.3####
 #run these two plot functions 
@@ -98,11 +98,11 @@ plot(output_csr)
 ####Q2####
 quadrat.test(output_ppp, alternative = "clustered")
 quadrat.test(output_csr, alternative = "regular")
-#PPP quadrat test X2 = 291.5, df = 24, p-value <2.2e-16
-#CSR quadrat test X2 = 46.633, df = 24, p-value 0.9963
+#PPP quadrat test X2 = 289, df = 24, p-value <2.2e-16
+#CSR quadrat test X2 = 37.35, df = 24, p-value 0.9596
 #P value close to 1 means this does not differ from CSR
 #(which hopefully makes sense, because it was coded as a true CSR)
-#These will always be a little different, I tired to set the seed but it didn't 
+#These will always be a little different, I tried to set the seed but it didn't 
 #have an effect
 
 ####Q3####
@@ -119,6 +119,12 @@ plot(csrest)
 
 plot(envelope(output_ppp))
 plot(envelope(output_csr))
+
 #For the point pattern we generated, at very small scales the points are randomly distributed, 
 #however as we increase scale it becomes obvious there is a pattern to the points - they're clustered 
-#By simply changing the effect range to 100 instead of 10, we can generate a more "random" set of points 
+#By simply changing the effect range to 100 instead of 10, we can generate a more "random" set of points
+
+####Q4####
+
+#I think these plots are the opposite - random at small scales and clustered at large scale - 
+#Do we need to increase the number of center points to get the opposite pattern? 
