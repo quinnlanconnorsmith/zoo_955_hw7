@@ -76,6 +76,7 @@ plot(output_ppp)
 #create a CSR object for analysis 
 
 lambda.u <- function(x,y){1000 * x^2 * y^2 + 1000}
+
 output_csr <- rpoispp(lambda = lambda.u, win = owin(c(0,1), c(0,1)))
 plot(output_csr)
 
@@ -101,6 +102,8 @@ quadrat.test(output_csr, alternative = "regular")
 #CSR quadrat test X2 = 46.633, df = 24, p-value 0.9963
 #P value close to 1 means this does not differ from CSR
 #(which hopefully makes sense, because it was coded as a true CSR)
+#These will always be a little different, I tired to set the seed but it didn't 
+#have an effect
 
 ####Q3####
 
@@ -111,10 +114,11 @@ plot(K)
 
 pest <- Kest(output_ppp)
 plot(pest)
-cest <- Kest(output_csr)
-plot(cest)
+csrest <- Kest(output_csr)
+plot(csrest)
 
 plot(envelope(output_ppp))
 plot(envelope(output_csr))
-#For the point pattern we generated, at small scales the points are randomly distributed, 
+#For the point pattern we generated, at very small scales the points are randomly distributed, 
 #however as we increase scale it becomes obvious there is a pattern to the points - they're clustered 
+#By simply changing the effect range to 100 instead of 10, we can generate a more "random" set of points 

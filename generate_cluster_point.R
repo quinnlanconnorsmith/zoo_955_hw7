@@ -6,8 +6,8 @@ library(maptools)
 #define variables
 #variables that control the size and strength of clusters
 val.at.center=1
-effect.range=10
-background=0.001
+effect.range=25
+background=0.1
 
 #variables that control the number of points and spatial dimensions
 Pointnum=100
@@ -70,6 +70,8 @@ points(centers,type="p", col="red", pch=21, bg="red")
 
 #create a point pattern object for analysis using the spatstat library
 output_ppp = ppp(output.X, output.Y, c(Xmin,Xmax), c(Ymin,Ymax))
-.
 
+quadrat.test(output_ppp, alternative = "clustered")
+pest <- Kest(output_ppp)
+plot(pest)
 
